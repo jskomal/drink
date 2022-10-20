@@ -11,6 +11,10 @@ function App() {
 	const [savedDrinks, setSavedDrinks] = useState<Drink[]>([])
 
 	useEffect(() => {
+		const local = localStorage.getItem('interests')
+		if (local) {
+			setInterests(JSON.parse(local))
+		}
 		const controller = new AbortController()
 		const fetchRandom = async () => {
 			try {
@@ -30,10 +34,13 @@ function App() {
 				setErrorMsg('Something Went Wrong :/')
 			}
 		}
-
 		fetchRandom()
 		return () => controller.abort()
 	}, [])
+
+	useEffect(() => {
+		localStorage.setItem('interests', JSON.stringify(interests))
+	}, [interests])
 
 	const handleRefetch = () => {
 		setIsFirstLoad(false)
@@ -153,8 +160,8 @@ function App() {
 					<section className='interests'>
 						<h4>Your interests</h4>
 						{interests.map((interest, index) => (
-							<div className='interest-enclosure'>
-								<p key={index}>{interest}</p>
+							<div key={index} className='interest-enclosure'>
+								<p>{interest}</p>
 								<button
 									className='btn'
 									onClick={() => handleRemoveInterest(interest)}>
@@ -166,7 +173,6 @@ function App() {
 					</section>
 				)}
 			</main>
-
 			<footer>
 				<p>
 					made by <a href='https://www.github.com/jskomal'>Jordan Skomal</a>
