@@ -8,12 +8,17 @@ function App() {
   const [interests, setInterests] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchRandom();
+    const controller = new AbortController();
+    fetchRandom(controller);
+    return () => controller.abort();
   }, []);
 
-  const fetchRandom = async () => {
+  const fetchRandom = async (controller: AbortController) => {
     const res = await fetch(
-      "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+      "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+      {
+        signal: controller.signal,
+      }
     );
     const drink = await res.json();
     setRandomDrink(drink.drinks[0]);
