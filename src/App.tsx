@@ -167,7 +167,7 @@ function App() {
 									onClick={() => handleRemoveInterest(interest)}>
 									Remove
 								</button>
-								<button className='btn'>Inspire with this</button>
+								<button className='btn'>Inspire</button>
 							</div>
 						))}
 					</section>
