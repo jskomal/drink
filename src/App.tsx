@@ -7,6 +7,8 @@ function App() {
 	const [randomDrink, setRandomDrink] = useState<Drink | null>(null)
 	const [interests, setInterests] = useState<string[]>([])
 	const [isFirstLoad, setIsFirstLoad] = useState(true)
+	const [errorMsg, setErrorMsg] = useState('')
+	const [savedDrinks, setSavedDrinks] = useState<Drink[]>([])
 
 	useEffect(() => {
 		const controller = new AbortController()
@@ -25,6 +27,7 @@ function App() {
 					console.log(error.message)
 				}
 				controller.abort()
+				setErrorMsg('Something Went Wrong :/')
 			}
 		}
 
@@ -50,6 +53,7 @@ function App() {
 					console.log(error.message)
 				}
 				controller.abort()
+				setErrorMsg('Something Went Wrong :/')
 			}
 		}
 
@@ -69,7 +73,7 @@ function App() {
 	if (!randomDrink)
 		return (
 			<>
-				<h1>Loading...</h1>
+				<h1>{errorMsg || 'Loading ...'}</h1>
 			</>
 		)
 
@@ -80,6 +84,7 @@ function App() {
 				<h2>Inspire your next cocktail</h2>
 			</header>
 			<main>
+				<p>{errorMsg}</p>
 				{isFirstLoad && (
 					<>
 						<p>tap on an ingredient to add it to your interests</p>
