@@ -77,6 +77,12 @@ function App() {
 	const handleRemoveInterest = (interest: string) =>
 		setInterests((prev) => prev.filter((name) => name !== interest))
 
+	const handleInspire = (interest: string) => {
+		if (interest.includes(' ')) {
+			const formattedInterest = interest.split(' ').join('_')
+		}
+	}
+
 	if (!randomDrink)
 		return (
 			<>
@@ -167,7 +173,9 @@ function App() {
 									onClick={() => handleRemoveInterest(interest)}>
 									Remove
 								</button>
-								<button className='btn'>Inspire</button>
+								<button className='btn' onClick={() => handleInspire(interest)}>
+									Inspire
+								</button>
 							</div>
 						))}
 					</section>
